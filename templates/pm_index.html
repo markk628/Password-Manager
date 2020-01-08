@@ -7,9 +7,9 @@
 <center>
 <body>
 <div class="img">
-{% for password in passwords %}
-    <div>
-        <a href='/passwords/{{password._id}}'>
+{% for account in accounts %}
+    <div class="btn-group">
+        <button>{{account.platform}}</button>
     </div>
 {% endfor %}
 </div>
