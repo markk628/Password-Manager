@@ -40,6 +40,32 @@ def account_show(account_id):
     account = accounts.find_one({'_id': ObjectId(account_id)})
     return render_template('pm_show.html', account=account)
 
+# code for editing account
+@app.route('/accounts/<account_id>', methods=['POST'])
+def account_update(account_id):
+    updated_account = {
+        'platform': request.form.get('platform'),
+        'id': request.form.get('id'),
+        'password': request.form.get('password'),
+        'url': request.form.get('url')
+    }
+    accounts.update_one(
+        {'_id': ObjectId(account_id)},
+        {'$set': updated_account})
+    return redirect(url_for('account_show', account_id=account_id))
+
+# edit route
+@app.route('/accounts/<account_id>/edit')
+def account_edit(account_id):
+    account = accounts.find_one({'_id': ObjectId(account_id)})
+    return render_template('pm_edit.html', account=account, title='Edit Account')
+
+# delete route
+@app.route('/accounts/<account_id>/delete', methods=['POST'])
+def account_delete(account_id):
+    accounts.delete_one({'_id': ObjectId(account_id)})
+    return redirect(url_for('pm_index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))

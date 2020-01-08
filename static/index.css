@@ -2,7 +2,7 @@
     background-color: white;
     border: 1px solid skyblue;
     color: black;
-    padding: 10px 24px;
+    padding: 50px 100px;
     cursor: pointer;
     display: block;
 }
@@ -16,5 +16,4 @@
     position: absolute;
     left: 51%;
     margin-left: -100px !important;
-    display: block;
 }
