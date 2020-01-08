@@ -9,7 +9,9 @@
 <div class="img">
 {% for account in accounts %}
     <div class="btn-group">
-        <button>{{account.platform}}</button>
+        <a href="/accounts/{{ account._id }}">
+            <button>{{ account.platform }}</button>
+        </a>
     </div>
 {% endfor %}
 </div>

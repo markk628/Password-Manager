@@ -14,7 +14,7 @@ app = Flask(__name__)
 # home page
 @app.route('/')
 def pm_index():
-    return render_template('pm_index.html')
+    return render_template('pm_index.html', accounts=accounts.find())
 
 # new account page
 @app.route('/accounts/new')
