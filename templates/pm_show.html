@@ -7,8 +7,9 @@
 <body>
     <div class='row'>
         <div class='col-sm-6 col-sm-offset-3'>
+            <h1>{{ account.platform }}</h1>
             <h1>{{ account.id }}</h1>
-            <h1>{{account.password}}</h1>
+            <h1>{{ account.password }}</h1>
             <p><a href='/accounts/{{ account._id }}/edit'>
                 <button type="button" class="btn btn-primary">Edit</button>
             </a></p>

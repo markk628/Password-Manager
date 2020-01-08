@@ -25,6 +25,7 @@ def account_new():
 @app.route('/accounts', methods=['POST'])
 def account_submit():
     account = {
+        'platform': request.form.get('platform'),
         'id': request.form.get('id'),
         'password': request.form.get('password'),
         'url': request.form.get('url')
