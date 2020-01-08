@@ -6,15 +6,16 @@
 </head>
 <center>
 <body>
-<div class="img">
-{% for account in accounts %}
     <div class="btn-group">
-        <a href="/accounts/{{ account._id }}">
-            <button>{{ account.platform }}</button>
+        {% for account in accounts %}
+            <a href="/accounts/{{ account._id }}">
+                <button>{{ account.platform }}</button>
+            </a>
+        {% endfor %}
+        <a href="/accounts/new">
+            <button>New Account</button>
         </a>
     </div>
-{% endfor %}
-</div>
 </body>
 </center>
 {% endblock %}
