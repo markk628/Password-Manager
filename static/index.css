@@ -1,3 +1,16 @@
+.btn-group button {
+    background-color: white;
+    border: 1px solid skyblue;
+    color: black;
+    padding: 10px 24px;
+    cursor: pointer;
+    display: block;
+}
+
+.btn-group button:hover {
+    background-color: rgb(255, 247, 0);
+}
+
 .brand {
     color: white;
     position: absolute;
