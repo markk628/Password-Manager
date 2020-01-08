@@ -1,0 +1,7 @@
+.brand {
+    color: white;
+    position: absolute;
+    left: 51%;
+    margin-left: -100px !important;
+    display: block;
+}

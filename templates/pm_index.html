@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <title>Password Manager</title>
+</head>
+<center>
+<body>
+<div class="img">
+{% for password in passwords %}
+    <div>
+        <a href='/passwords/{{password._id}}'>
+    </div>
+{% endfor %}
+</div>
+</body>
+</center>
+{% endblock %}
