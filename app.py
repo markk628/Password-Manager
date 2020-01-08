@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from passwordgen import generate_password
 import os
 
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/passwordmanager')
@@ -15,6 +16,11 @@ app = Flask(__name__)
 @app.route('/')
 def pm_index():
     return render_template('pm_index.html', accounts=accounts.find())
+
+@app.route('/accounts/generate')
+def pm_generate():
+    password = generate_password()
+    return render_template('pm_generate.html', password=password)
 
 # new account page
 @app.route('/accounts/new')
