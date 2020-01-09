@@ -10,9 +10,7 @@
             <h1>{{ account.platform }}</h1>
             <h1>{{ account.id }}</h1>
             <h1>{{ account.password }}</h1>
-            <form action="{{ account.url }}">
-                <button>{{ account.platform }}</button>
-            </form>
+            <h3>{{ account.url }}</h3>
             <p><a href='/accounts/{{ account._id }}/edit'>
                 <button type="button" class="btn btn-primary">Edit</button>
             </a></p>
