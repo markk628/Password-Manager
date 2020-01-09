@@ -9,7 +9,7 @@
     <div class="btn-group">
         {% for category in categories %}
             <a href="/categories/{{ category._id }}">
-                <button>{{ account.platform }}</button>
+                <button>{{ category.platform }}</button>
             </a>
         {% endfor %}
         <a href="/categories/new">

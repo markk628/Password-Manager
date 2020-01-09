@@ -2,12 +2,13 @@
 
 {% block content %}
 <head>
-    <title>Add Category</title>
+    <title>Edit Category</title>
 </head>
-<legend>Add Category</legend>
+<legend>Edit Category</legend>
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
-        <form method='POST' action='/categories'>
+        <form method='POST' action='/categories/{{category._id}}'>
+            <input type='hidden' name='_method' value='PUT'/>
             {% include 'partials/category_form.html' %}
             <div class='form-group'>
                 <button class='btn btn-primary' type='submit'>Save Category</button>
