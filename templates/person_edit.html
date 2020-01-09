@@ -2,16 +2,16 @@
 
 {% block content %}
 <head>
-    <title>Edit Category</title>
+    <title>Edit Name</title>
 </head>
-<legend>Edit Category</legend>
+<legend>Edit Name</legend>
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
-        <form method='POST' action='/categories/{{category._id}}'>
+        <form method='POST' action='/{{name._id}}'>
             <input type='hidden' name='_method' value='PUT'/>
-            {% include 'partials/category_form.html' %}
+            {% include 'partials/person_form.html' %}
             <div class='form-group'>
-                <button class='btn btn-primary' type='submit'>Save Category</button>
+                <button class='btn btn-primary' type='submit'>Save Name</button>
             </div>
         </form>
     </div>

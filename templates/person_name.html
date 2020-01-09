@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <title>Name</title>
+</head>
+<center>
+<body>
+    <div class="btn-group">
+        {% for name in names %}
+            <a href="/{{ name._id }}">
+                <button>{{ name.name }}</button>
+            </a>
+        {% endfor %}
+        <a href="/new">
+            <button>New Person</button>
+        </a>
+    </div>
+</body>
+</center>
+
+{% endblock %}

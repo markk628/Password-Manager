@@ -8,10 +8,64 @@ host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/passwordmanager'
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 accounts = db.accounts
-categories = db.categories
+names = db.names
 accounts.drop()
 
 app = Flask(__name__)
+
+# names page
+@app.route('/')
+def person_name():
+    return render_template('person_name.html', names=names.find())
+
+# new Person page
+@app.route('/new')
+def person_new():
+    return render_template('person_new.html', name={}, title='New Person')
+
+# submitting the new person to database
+@app.route('/', methods=['POST'])
+def person_submit():
+    name = {
+        'name': request.form.get('name')
+    }
+    print(name)
+    name_id = names.insert_one(name).inserted_id
+    return redirect(url_for('person_show', name_id=name_id))
+
+# individual person page
+@app.route('/<name_id>')
+def person_show(name_id):
+    name = names.find_one({'_id': ObjectId(name_id)})
+    return render_template('person_show.html', name=name)
+
+# code for editing person's name
+@app.route('/<name_id>', methods=['POST'])
+def person_update(name_id):
+    updated_person = {
+        'name': request.form.get('name')
+    }
+    names.update_one(
+        {'_id': ObjectId(name_id)},
+        {'$set': updated_name})
+    return redirect(url_for('person_show', name_id=name_id))
+
+# edit person's name route
+@app.route('/<name_id>/edit')
+def person_edit(namee_id):
+    name = names.find_one({'_id': ObjectId(name_id)})
+    return render_template('person_edit.html', name=name, title='Edit Name')
+
+# delete route for person
+@app.route('/<name_id>/delete', methods=['POST'])
+def pereson_delete(name_id):
+    names.delete_one({'_id': ObjectId(name_id)})
+    return redirect(url_for('person_name'))
+
+
+
+
+
 
 # home page
 @app.route('/')
@@ -23,11 +77,6 @@ def pm_index():
 def pm_generate():
     password = generate_password()
     return render_template('pm_generate.html', password=password)
-
-# categories page
-@app.route('/categories')
-def pm_category():
-    return render_template('pm_category.html', categories=categories.find())
 
 # new account page
 @app.route('/accounts/new')
@@ -78,50 +127,6 @@ def account_edit(account_id):
 def account_delete(account_id):
     accounts.delete_one({'_id': ObjectId(account_id)})
     return redirect(url_for('pm_index'))
-
-# new category page
-@app.route('/categories/new')
-def category_new():
-    return render_template('category_new.html', category={}, title='New Category')
-
-# submitting the new category to database
-@app.route('/categories', methods=['POST'])
-def category_submit():
-    category = {
-        'platform': request.form.get('platform')
-    }
-    print(category)
-    category_id = categories.insert_one(category).inserted_id
-    return redirect(url_for('category_show', category_id=category_id))
-
-# individual category page
-@app.route('/categories/<category_id>')
-def category_show(category_id):
-    category = categories.find_one({'_id': ObjectId(category_id)})
-    return render_template('category_show.html', category=category)
-
-# code for editing category
-@app.route('/categories/<category_id>', methods=['POST'])
-def category_update(category_id):
-    updated_category = {
-        'platform': request.form.get('platform')
-    }
-    categories.update_one(
-        {'_id': ObjectId(category_id)},
-        {'$set': updated_category})
-    return redirect(url_for('category_show', category_id=category_id))
-
-# edit category route
-@app.route('/categories/<category_id>/edit')
-def category_edit(category_id):
-    category = categories.find_one({'_id': ObjectId(category_id)})
-    return render_template('category_edit.html', category=category, title='Edit Category')
-
-# delete route
-@app.route('/categories/<category_id>/delete', methods=['POST'])
-def category_delete(category_id):
-    categories.delete_one({'_id': ObjectId(category_id)})
-    return redirect(url_for('pm_category'))
 
 
 if __name__ == '__main__':
