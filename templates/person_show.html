@@ -14,7 +14,20 @@
             <p><form method='POST' action='/{{name._id}}/delete'>
                 <input type='hidden' name='_method' value='DELETE'>
                 <button class='btn btn-primary' type='submit'>Delete</button>
-            </form></p>
+            </form></p>            
+            {% for account in accounts %}
+                <div class="btn-group">
+                    <a href="/{{name._id}}/accounts/{{ account._id }}">
+                        <h1>Test</h1>
+                        <button>{{ account.platform }}</button>
+                    </a>
+                </div>
+            {% endfor %}
+            <div class="btn-group">
+                <a href='/{{name._id}}/accounts/new'>
+                    <button>New Account</button>
+                </a>
+            </div>
         </div>
     </div>
 </body>

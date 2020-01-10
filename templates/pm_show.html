@@ -2,7 +2,7 @@
 
 {% block content %}
 <head>
-        <title>{{account.platform}}</title>
+    <title>{{account.platform}}</title>
 </head>
 <body>
     <div class='row'>
@@ -11,10 +11,10 @@
             <h1>{{ account.id }}</h1>
             <h1>{{ account.password }}</h1>
             <h3>{{ account.url }}</h3>
-            <p><a href='/accounts/{{ account._id }}/edit'>
+            <p><a href='/{{name_id}}/accounts/{{ account._id }}/edit'>
                 <button type="button" class="btn btn-primary">Edit</button>
             </a></p>
-            <p><form method='POST' action='/accounts/{{account._id}}/delete'>
+            <p><form method='POST' action='/{{name_id}}/accounts/{{account._id}}/delete'>
                 <input type='hidden' name='_method' value='DELETE'>
                 <button class='btn btn-primary' type='submit'>Delete</button>
             </form></p>

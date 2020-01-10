@@ -7,7 +7,7 @@
 <legend>Add Account</legend>
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
-        <form method='POST' action='/accounts'>
+        <form method='POST' action='/{{name_id}}/accounts'>
             {% include 'partials/pm_form.html' %}
             <div class='form-group'>
                 <button class='btn btn-primary' type='submit'>Save Account</button>
