@@ -44,7 +44,7 @@ def person_submit():
 @app.route('/<name_id>')
 def person_show(name_id):
     name = names.find_one({'_id': ObjectId(name_id)})
-    account = accounts.find({'name_id': ObjectId(name_id)})
+    account = list(accounts.find({'name_id': name_id}))
     return render_template('person_show.html', name=name, accounts=account)
 
 # code for editing person's name
@@ -86,7 +86,8 @@ def account_submit(name_id):
         'platform': request.form.get('platform'),
         'id': request.form.get('id'),
         'password': request.form.get('password'),
-        'url': request.form.get('url')
+        'url': request.form.get('url'),
+        'name_id': name_id
     }
     print(account)
     account_id = accounts.insert_one(account).inserted_id
@@ -98,32 +99,33 @@ def account_show(name_id, account_id):
     account = accounts.find_one({'_id': ObjectId(account_id)})
     return render_template('pm_show.html', account=account, name_id=name_id)
 
-# # code for editing account
-# @app.route('/<name_id>/accounts/<account_id>', methods=['POST'])
-# def account_update(name_id, account_id):
-#     updated_account = {
-#         'platform': request.form.get('platform'),
-#         'id': request.form.get('id'),
-#         'password': request.form.get('password'),
-#         'url': request.form.get('url')
-#     }
-#     accounts.update_one(
-#         {'_id': ObjectId(account_id)},
-#         {'$set': updated_account})
-#     return redirect(url_for('account_show', account_id=account_id, name_id=name_id))
+# code for editing account and reuploading to database
+@app.route('/<name_id>/accounts/<account_id>', methods=['POST'])
+def account_update(name_id, account_id):
+    updated_account = {
+        'platform': request.form.get('platform'),
+        'id': request.form.get('id'),
+        'password': request.form.get('password'),
+        'url': request.form.get('url')
+    }
+    accounts.update_one(
+        {'_id': ObjectId(account_id)},
+        {'$set': updated_account})
+    return redirect(url_for('account_show', account_id=account_id, name_id=name_id))
 
-# # edit route
-# @app.route('/<name_id>/accounts/<account_id>/edit')
-# def account_edit(name_id, account_id):
-#     name = names.find_one({'_id': ObjectId(name_id)})
-#     account = accounts.find_one({'_id': ObjectId(account_id)})
-#     return render_template('pm_edit.html', account=account, name=name, name_id=name_id, title='Edit Account')
+# edit account route
+@app.route('/<name_id>/accounts/<account_id>/edit')
+def account_edit(name_id, account_id):
+    name = names.find_one({'_id': ObjectId(name_id)})
+    account = accounts.find_one({'_id': ObjectId(account_id)})
+    return render_template('pm_edit.html', account=account, name=name, name_id=name_id, title='Edit Account')
 
-# # delete route
-# @app.route('/<name_id>/accounts/<account_id>/delete', methods=['POST'])
-# def account_delete(name_id, account_id):
-#     accounts.delete_one({'_id': ObjectId(account_id)})
-#     return redirect(url_for('pm_index'))
+# delete account route
+@app.route('/<name_id>/accounts/<account_id>/delete', methods=['POST'])
+def account_delete(name_id, account_id):
+    account = accounts.find_one({'_id': ObjectId(account_id)})
+    accounts.delete_one({'_id': ObjectId(account_id)})
+    return redirect(url_for('person_show', name_id=name_id))
 
 
 if __name__ == '__main__':
